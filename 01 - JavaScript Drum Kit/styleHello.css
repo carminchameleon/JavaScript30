@@ -1,0 +1,97 @@
+/*
+//backgound : 색깔 경로, 반복, 고정 위치
+backgound : lightblue url("img~') no-repeat fixed center;
+
+fontfont-family: 'Monoton', cursive;
+
+
+*/
+
+
+html {
+    font-size : 10px;
+    background-color :  #1c6b96;
+  }
+  
+body,html {
+      margin: 0;
+      padding : 0;
+      font-family : sans-serif;   
+  }
+  
+  
+  .greeting {
+    color : #febf00;
+    text-shadow:3px 2px 5px  #d1dddd;
+    font-family: 'Permanent Marker', cursive;
+    font-size : 70px;
+    text-align : center;
+    margin : 30px;
+  }
+
+  .showing {
+      border: solid 10px #fcc500;
+      border-radius: .5rem; /* 모서리 둥글게*/
+
+      margin-left: auto;
+      margin-right: auto;
+      width : 800px;
+      height: 420px;
+      
+  }
+  #image{
+      width : 100%;
+      height : 100%;
+        }
+
+  .keys {
+    position: relative;
+    top : 50px;
+    display:flex;
+    flex: 1;  
+    bottom : 10px;
+     align-items: center; /* 세로상가운데로*/ 
+     /* 세로상가운데로*/ 
+     justify-content: center; /* 가로상 가운데로*/
+     margin-top: auto;
+  }
+  
+  .key{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-style: italic;
+    font-weight: ;
+     border : .4rem solid #87b7cd;
+     border-radius: .5rem; /* 모서리 둥글게*/
+     margin : 1rem;
+     font-size : 1.5rem;
+     padding : 1rem 1rem;
+     transition: all .07s; /* 변화하는 시간*/
+     width : 11rem;
+     text-align : center;
+     color : #d2b6d9;
+     background :#283b42;
+     text-shadow: 0 0 0.5rem #d2b6d9;
+  }
+  
+  
+  .playing{
+      transform : scale(1.1);
+      border-color : #3f73a3;
+      box-shadow: 0 0 1rem#d1dddd;
+  }
+  
+  
+  kbd{ 
+      display : block;
+      font-size : 4rem;
+  }
+  
+  .sound{
+      font-size : 1.2rem;
+      text-transform: uppercase;
+      letter-spacing : .1rem;
+      color: #d1dddd;
+  }
+  
+  
+  

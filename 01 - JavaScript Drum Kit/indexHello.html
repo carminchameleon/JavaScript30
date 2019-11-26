@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Say hello</title>
+  <link rel="stylesheet" href="styleHello.css">
+  <link href="https://fonts.googleapis.com/css?family=Monoton|Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+  <div class = "greeting">Say Hello</div>
+  <div class = "showing">
+         <img id = "image" src="image/defalt.gif" alt="default">
+  </div>
+  <div class="keys">
+    <div data-key="65" class="key">
+      <kbd>A</kbd>
+      <span class="sound">Hello</span>
+    </div>
+    <div data-key="83" class="key">
+      <kbd>S</kbd>
+      <span class="sound">Hi there</span>
+    </div>
+    <div data-key="68" class="key">
+      <kbd>D</kbd>
+      <span class="sound">How R U doing?</span>
+    </div>
+    <div data-key="70" class="key">
+      <kbd>F</kbd>
+      <span class="sound">sup dude</span>
+    </div>
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">sup homie</span>
+    </div>
+    <div data-key="72" class="key">
+      <kbd>H</kbd>
+      <span class="sound">howdy doody</span>
+    </div>
+    <div data-key="74" class="key">
+      <kbd>J</kbd>
+      <span class="sound">how's everything</span>
+    </div>
+    <div data-key="75" class="key">
+      <kbd>K</kbd>
+      <span class="sound">What's going on?</span>
+    </div>
+    <div data-key="76" class="key">
+      <kbd>L</kbd>
+      <span class="sound">what's up</span>
+    </div>
+  </div>
+
+  <audio data-key="65" src="Greeting/hello.mp3"></audio>
+  <audio data-key="83" src="Greeting/hithere.mp3"></audio>
+  <audio data-key="68" src="Greeting/howareyoudoing.mp3"></audio>
+  <audio data-key="70" src="Greeting/supdude.mp3"></audio>
+  <audio data-key="71" src="Greeting/suphomie.mp3"></audio>
+  <audio data-key="72" src="Greeting/howdydoody.mp3"></audio>
+  <audio data-key="74" src="Greeting/howseverything.mp3"></audio>
+  <audio data-key="75" src="Greeting/what's going on.mp3"></audio>
+  <audio data-key="76" src="Greeting/what'sup.mp3"></audio>
+
+
+<script>
+/*
+1. 내가 어떤 키를 눌렀을 때, 그 키의 값을 콘솔로그에 나타낸다.
+2. 그게 된다면, 여기서 우리가 얻어야 하는 것은 key code 이다.
+   그래서 event.keyCode로 바꾼다.
+3. audio 속성과 내가 누른 키 값을 연결해야 한다.
+  속성을 쓰는 방법 
+ audio[data-key="__"] 여기서 audio는 하나의 속성이고, data-key는 그 안의 정보를 담고 있는 것?
+ 내가 누른 키보드의 data-key가 연결되도록 ${event.keyCode} 를 넣고 console.log로 확인해본다.
+ 그러면 내가 누른 키값에 해당하는 audio 속성이 나온다. 
+ 4. 내가 오디오가 없는 키를 눌렀을 때, audio는 null 이다.
+ 그래서 그 null 이나오는 경우에는 함수를 모두 멈춘다.
+ 5. 만약 누른 키 값에 해당하는 오디오가 있다면, 
+     audio.play()  오디오를 플레이 시키는 명령어
+BUT 그런데 문제가 있다. 이걸 연속해서 플레이 되게 하고 싶은데 아무리 빨리 눌러도, 일정 시간 후에 나온다.
+  내가 누르자 마자 바로 되게 하는 것이 필요하다.
+  6. audio.currentTime = 0;
+   만약 노래가 30초라면, 15를 설정하면 15초 부터 재생되게 한다.
+<내가 키를 눌렀을 때, 디자인이 바뀌게 하는 법>
+  7. document.querySelector로 key라는 클래스 값에 해당하는 div 값을 가져온다.
+    const key = document.querySelector(`.key[data-key="${event.keyCode}"]`)
+    console.log(key) 로 해보면 div ~~ 값이 나온다.
+8. 키를 눌렀을 때 블록이 노랑색으로 바뀌게 하는 css 속성 playing을 추가 시켜줘야 한다.
+   key.classList.add('playing')
+BUT 추가를 했기 때문에 한번 누른 키에 playing 속성이 안없어지고 계속 유지되어 있다.
+    이걸 다시 돌려놓아야 한다.
+9. CSS 의 파일에서 내가 원하는 transition 값을 설정한다.
+10. 키를 누르고 나서 파일이 다시 원래의 검은색으로 돌아올 수 있도록 설정해야 한다.
+   const keys = document.querySelectorAll('.key') 로 key를 가지고 있는 모든 것들을 설정하면 모든 key값들이 선택된다.
+   key에 이벤트 리스너를 달아주는데 ( 동작 ( 트렌지션이 끝나면) , removeTransition ) 을 써준다.
+   이제 removeTransition이라는 transition을 없애주는 함수를 만든다.
+11. removeTransition이라는 함수를 작성하고 console.log(event)를 해보면
+내가 키를 눌렀을때 실행되는 모든 transition이 보여진다.
+12. 우리는 실행했을 때, transition 되는 부분을 보아야 하므로, 
+event.propertyName 으로 선택을 하고, 이것이 transition 아니라면 return; 그냥 냅둔다.
+13. console.log(this) 를 해보면, key에 해당하는 값이 나온다.
+ 다시 되돌리기 위해서 this.classList.remove('playing') 을 해준다.
+  transition 시간을 조금 길게 해 놓으면 변화하는 것이 보인다.
+  크기가 변화하고, 다시 돌아오고, 처음으로 돌아오는 모습 // element에 보면 playing이라는 클래스 값이 생겼다가 없어진다.
+14. 다시 transition 시간을 빠르게 돌려놓는다. 
+15. playSound 라는 함수로 분리해서 깔끔하게 만든다.
+
+-사진 이름 통일 하기
+-이벤트리스너로 키가 눌렸을 때, 그 사진을 띄우기
+-키보드 배열로 만들어 놓고, 그 배열과 밎으면 src 불러오기
+-
+
+
+*/
+
+function playSound(event){
+  const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`) // 
+  const key = document.querySelector(`.key[data-key="${event.keyCode}"]`)
+  if ( !audio ) return; // stop the function from running all togethers
+  audio.currentTime = 0; // rewind to the start
+  audio.play(); // 오디오를 플레이한다.
+  key.classList.add('playing')
+}
+
+function removeTransition(event){
+  if ( event.propertyName !== 'transform') return; // skip it if it's not a transform
+  this.classList.remove('playing') // this = key 
+}
+
+const isKey = ["a","s","d","f","g","h","j","k","l"]
+function changeImage(event){
+  if ( isKey.find(el=>el===event.key)){
+  const image = document.querySelector('#image');
+  image.src=`image/${event.key.toUpperCase()}.gif`
+  }
+}
+
+const keys = document.querySelectorAll('.key')
+keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+window.addEventListener('keydown',playSound) // 함수 분리
+window.addEventListener('keydown',changeImage)
+
+
+</script>
+
+
+</body>
+</html>
