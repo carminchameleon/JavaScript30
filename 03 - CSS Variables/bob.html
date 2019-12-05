@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html Lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color🎨</title>
+    <link href="https://fonts.googleapis.com/css?family=Bangers&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+        <body>
+                <h2>Let's Draw with <span class ='hl'> BOB </span></h2>
+                 
+                <div class = "controls">
+                   <label for="spacing">Spacing:</label>
+                   <input class = "slider" id = "spacing" type="range" name = "spacing" min="10" max="200" value="10" data-sizing="px">
+                
+                   <label for="base">Base Color</label>
+                   <input class= "slider" id = "base" type="color" name="base" value="#ffc600">
+
+                    <label for="hue-rotate">Hue-rotate:</label>
+                    <input class="slider" id = "hue-rotate" type="range" name = "hue-rotate" min="0" max= "360" data-sizing="deg">
+
+                </div>
+            
+
+                <img src="https://images.unsplash.com/photo-1504197885-609741792ce7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80" >
+               
+    <style>
+    
+    :root{
+        --base :#ed76ce;
+        --spacing : 10px;
+        --brightness : 1;
+        --blur : 10px;
+        --hue-rotate : 0deg;
+    }
+    
+    img{
+        height: 450px;
+        padding : var(--spacing);
+        background : var(--base);
+        filter : blur(var(--blur));
+        filter : brightness(var(--brightness));
+        filter : hue-rotate(var(--hue-rotate))
+    }
+
+    .hl{
+        color: var(--base);
+    }
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+    
+    /*
+    글자 그림자 효과
+    text-shadow: horizontal-offset vertical-offset blur color;
+      text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+   */
+
+    body{
+        text-align : center;
+        background : #193549;
+        background-image:url('images/BOB-SKY.jpg');
+        background-size : 100% 105%;
+        color: white;
+        text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+        font-family: 'Bangers', cursive;
+        font-size: 42px;
+        letter-spacing: 0.1em;
+    }
+
+    .controls {
+        margin-bottom : 50px;
+    }
+
+    input{
+     width : 100px;
+    }
+    
+  .slider {
+  -webkit-appearance: none;
+  width: 7%;
+  height: 20px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+  .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 20%; 
+  background: white;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 10%;
+  background: white;
+  cursor: pointer;
+}
+    </style>
+
+
+    <script>
+    
+    /*
+    1. inputs에 document.querySelectorAll('.controls input') 로 연결한다. 
+   콘솔로그에 확인을 해보면 nodelist가 나온다. 이것은 array랑 다르다.
+    우리는 foreach를 쓸 것이다.
+    console.log(this.value) 를 하면 어떤 값으로 변경을 했는지 나온다.
+
+    2. 근데 이거는 변경하는 값 하나만 나타내므로 모든 마우스의 움직임에 따라서 값을 나오게 해야 한다.
+
+    3. suffix 가 필요하다. blur, spacing은 px라는 단위가 붙어야 한다.
+    dataset 을 콘솔에 쳐보면 html에 써놓은 data-size="px" 의 값이 object로 보여진다.
+    DOMStringMap {sizing: "px"} 이렇게
+    data-[   ] 여기에 들어가는 값이 object 형태로 들어간다.
+    data-cool="hello" 이러면 { cool : "hello "} 이런 식으로
+
+    4. 색은 suffix로 px이 필요하지 않으므로 "" 으로 설정한다.
+
+    5. 이제 우리는 실제 변수를 연결시켜야 한다.
+    우리의 root를 가지고 값을 변화시키는데, 우리는 위에 name spacing, blur, color을 설정해 놓았다.
+    이걸 console.log(this.name) 으로 하면 내가 어떤 부분을 건드렸는지 나온다.
+
+    6. 이제 변화된 값을 실제 dom에 연결을 해야 한다.
+    CSS setProperty 하는 방법 ( 바꾸고자 하는 것의 이름 , 값) 이므로, this name이 들어가게 `--${this.name}`으로 하고,
+    style.setProperty(propertyName, value, priority);
+
+    document.documentElement.style에서 setProperty
+
+    */
+    const inputs = document.querySelectorAll('.controls input');
+
+function handleUpdate() {
+  const suffix = this.dataset.sizing || '';
+  console.log(this.dataset)
+  document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+}
+
+inputs.forEach(input => input.addEventListener('change', handleUpdate));
+inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+    </script>
+
+</body>
+</html>

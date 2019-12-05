@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html Lang = "en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoped CSS variables and JS</title>
+</head>
+
+<body>
+    <h2>Updates CSS Variables with <span class ='hl'> JS </span></h2>
+    <div class = "controls">
+       <label for="spacing">Spacing:</label>
+       <input id = "spacing" type="range" name = "spacing" min="10" max="200" value="10" data-sizing="px">
+    
+       <label for="blur">Blur:</label>
+       <input id = "blur" type="range" name = "blur" min="0" max="25" value = "10" data-sizing="px">
+
+       <label for="base">Base Color</label>
+       <input id = "base" type="color" name="base" value="#ffc600">
+    </div>
+
+    <img src="https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?ixlib=rb-1.2.1&auto=format&fit=crop&w=1866&q=80" >
+
+
+    <style>
+    
+    :root{
+        --base : #ffc600;
+        --spacing : 10px;
+        --blur : 10px;
+    }
+
+    img{
+        padding : var(--spacing);
+        background : var(--base);
+        filter : blur(var(--blur));
+    }
+
+    .hl{
+        color: var(--base);
+    }
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+
+    body{
+        text-align : center;
+        background : #193549;
+        color: white;
+        font-family : 'helvetica nenu' sans-serif;
+        font-size: 50px;
+        font-weight : 100;
+    }
+
+    .controls {
+        margin-bottom : 50px;
+    }
+
+    input{
+     width : 100px;
+    }
+    
+    </style>
+
+
+    <script>
+    
+    /*
+    1. inputs에 document.querySelectorAll('.controls input') 로 연결한다. 
+   콘솔로그에 확인을 해보면 nodelist가 나온다. 이것은 array랑 다르다.
+    우리는 foreach를 쓸 것이다.
+    console.log(this.value) 를 하면 어떤 값으로 변경을 했는지 나온다.
+
+    2. 근데 이거는 변경하는 값 하나만 나타내므로 모든 마우스의 움직임에 따라서 값을 나오게 해야 한다.
+
+    3. suffix 가 필요하다. blur, spacing은 px라는 단위가 붙어야 한다.
+    dataset 을 콘솔에 쳐보면 html에 써놓은 data-size="px" 의 값이 object로 보여진다.
+    DOMStringMap {sizing: "px"} 이렇게
+    data-[   ] 여기에 들어가는 값이 object 형태로 들어간다.
+    data-cool="hello" 이러면 { cool : "hello "} 이런 식으로
+
+    4. 색은 suffix로 px이 필요하지 않으므로 "" 으로 설정한다.
+
+    5. 이제 우리는 실제 변수를 연결시켜야 한다.
+    우리의 root를 가지고 값을 변화시키는데, 우리는 위에 name spacing, blur, color을 설정해 놓았다.
+    이걸 console.log(this.name) 으로 하면 내가 어떤 부분을 건드렸는지 나온다.
+
+    6. 이제 변화된 값을 실제 dom에 연결을 해야 한다.
+    CSS setProperty 하는 방법 ( 바꾸고자 하는 것의 이름 , 값) 이므로, this name이 들어가게 `--${this.name}`으로 하고,
+    style.setProperty(propertyName, value, priority);
+
+    document.documentElement.style에서 setProperty
+
+    */
+    const inputs = document.querySelectorAll('.controls input');
+
+function handleUpdate() {
+  const suffix = this.dataset.sizing || '';
+  console.log(this.dataset)
+  document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+}
+
+inputs.forEach(input => input.addEventListener('change', handleUpdate));
+inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+
+    </script>
+
+</body>
+</html>
