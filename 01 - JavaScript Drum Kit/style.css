@@ -1,3 +1,7 @@
+<!--  font-family: 'Permanent Marker', cursive;
+font-family: 'Monoton', cursive;
+ -->
+
 html {
   font-size: 10px;
   background: url(http://i.imgur.com/b9r5sEL.jpg) bottom center;
@@ -24,7 +28,7 @@ body,html {
   margin: 1rem;
   font-size: 1.5rem;
   padding: 1rem .5rem;
-  transition: all .07s ease;
+  transition: all 1.07s;
   width: 10rem;
   text-align: center;
   color: white;

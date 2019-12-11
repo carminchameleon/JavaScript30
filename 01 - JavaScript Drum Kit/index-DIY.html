@@ -2,66 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Say hello</title>
-  <link rel="stylesheet" href="styleHello.css">
-  <link href="https://fonts.googleapis.com/css?family=Monoton|Permanent+Marker&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap" rel="stylesheet">
-
-
+  <title>JS Drum Kit</title>
+  <link rel="stylesheet" href="styleDIY.css">
+  
 </head>
 <body>
-  <div class = "greeting">Say Hello</div>
-  <div class = "showing">
-         <img id = "image" src="image/defalt.gif" alt="default">
-  </div>
+
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
-      <span class="sound">Hello</span>
+      <span class="sound">clap</span>
     </div>
     <div data-key="83" class="key">
       <kbd>S</kbd>
-      <span class="sound">Hi there</span>
+      <span class="sound">hihat</span>
     </div>
     <div data-key="68" class="key">
       <kbd>D</kbd>
-      <span class="sound">How R U doing?</span>
+      <span class="sound">kick</span>
     </div>
     <div data-key="70" class="key">
       <kbd>F</kbd>
-      <span class="sound">sup dude</span>
+      <span class="sound">openhat</span>
     </div>
     <div data-key="71" class="key">
       <kbd>G</kbd>
-      <span class="sound">sup homie</span>
+      <span class="sound">boom</span>
     </div>
     <div data-key="72" class="key">
       <kbd>H</kbd>
-      <span class="sound">howdy doody</span>
+      <span class="sound">ride</span>
     </div>
     <div data-key="74" class="key">
       <kbd>J</kbd>
-      <span class="sound">how's everything</span>
+      <span class="sound">snare</span>
     </div>
     <div data-key="75" class="key">
       <kbd>K</kbd>
-      <span class="sound">What's going on?</span>
+      <span class="sound">tom</span>
     </div>
     <div data-key="76" class="key">
       <kbd>L</kbd>
-      <span class="sound">what's up</span>
+      <span class="sound">tink</span>
     </div>
   </div>
 
-  <audio data-key="65" src="Greeting/hello.mp3"></audio>
-  <audio data-key="83" src="Greeting/hithere.mp3"></audio>
-  <audio data-key="68" src="Greeting/howareyoudoing.mp3"></audio>
-  <audio data-key="70" src="Greeting/supdude.mp3"></audio>
-  <audio data-key="71" src="Greeting/suphomie.mp3"></audio>
-  <audio data-key="72" src="Greeting/howdydoody.mp3"></audio>
-  <audio data-key="74" src="Greeting/howseverything.mp3"></audio>
-  <audio data-key="75" src="Greeting/what's going on.mp3"></audio>
-  <audio data-key="76" src="Greeting/what'sup.mp3"></audio>
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
 
 
 <script>
@@ -105,13 +99,6 @@ event.propertyName 으로 선택을 하고, 이것이 transition 아니라면 re
   크기가 변화하고, 다시 돌아오고, 처음으로 돌아오는 모습 // element에 보면 playing이라는 클래스 값이 생겼다가 없어진다.
 14. 다시 transition 시간을 빠르게 돌려놓는다. 
 15. playSound 라는 함수로 분리해서 깔끔하게 만든다.
-
--사진 이름 통일 하기
--이벤트리스너로 키가 눌렸을 때, 그 사진을 띄우기
--키보드 배열로 만들어 놓고, 그 배열과 밎으면 src 불러오기
--
-
-
 */
 
 function playSound(event){
@@ -121,6 +108,7 @@ function playSound(event){
   audio.currentTime = 0; // rewind to the start
   audio.play(); // 오디오를 플레이한다.
   key.classList.add('playing')
+
 }
 
 function removeTransition(event){
@@ -128,17 +116,9 @@ function removeTransition(event){
   this.classList.remove('playing') // this = key 
 }
 
-const isKey = ["a","s","d","f","g","h","j","k","l"]
-function changeImage(event){
-  if ( isKey.find(el=>el===event.key)){
-  const image = document.querySelector('#image');
-  image.src=`image/${event.key.toUpperCase()}.gif`
-  }
-}
 
 const keys = document.querySelectorAll('.key')
 keys.forEach(key => key.addEventListener('transitionend', removeTransition))
-window.addEventListener('keydown',changeImage)
 window.addEventListener('keydown',playSound) // 함수 분리
 
 

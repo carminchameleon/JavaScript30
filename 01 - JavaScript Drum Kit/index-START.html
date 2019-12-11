@@ -58,7 +58,21 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-
+//1. 내가 어떤 키를 눌렀을 때, 그 키의 값을 콘솔로그에 나타낸다.
+//2. 그게 된다면, 여기서 우리가 얻어야 하는 것은 key code 이다.
+//   그래서 event.keyCode로 바꾼다.
+//3. audio 속성과 내가 누른 키 값을 연결해야 한다.
+//  audio[data-key="__"] 여기서 audio는 하나의 속성이고, data-key는 그 안의 정보를 담고 있는 것?
+// 내가 누른 키보드의 data-key가 연결되도록 ${event.keyCode} 를 넣고 console.log로 확인해본다.
+// 그러면 내가 누른 키값에 해당하는 audio 속성이 나온다. 
+// 4. 내가 속성이 없는 키 값을 눌렀을 때, audio는 null 이다.
+// 그래서 그 null 이나오는 경우에는 함수를 모두 멈춘다.
+//
+window.addEventListener('keydown',function(event){
+  const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`)
+  if ( !audio ) return; // stop the function from running all togethers
+    
+})
 </script>
 
 
